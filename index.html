@@ -18,7 +18,7 @@
       href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
     <title>Work Day Scheduler</title>
   </head>
 
@@ -30,6 +30,13 @@
     </header>
     <div class="container">
       <!-- Timeblocks go here -->
+      <form class="time-block" id="9am">
+        <div class="row">
+          <p class="hour col-2">9am</p>
+          <textarea class="col-8 jobs" id="inline-form-input"></textarea>
+          <button type="submit" data-event="none" class="col-2 save-btn"><i class="far fa-save"></i></button>
+        </div>
+      </form>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
