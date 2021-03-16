@@ -5,10 +5,10 @@
         // If time block = current hour then class = present
         // If time block > current hour then class = future
     // Time block text content is populated with any available data from local storage
-// Each time block has a save button
+// Each time block has a save button.
     // On click event saves data to local storage
 
-var timeBlocksArr = ["9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm"];
+var timeBlocksArr = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
 
 //Display date function
 function displayDate () {
@@ -19,26 +19,18 @@ function displayDate () {
 //Creates time block elements
 for (var i = 0; i < timeBlocksArr.length; i++) {
     var newTimeBlockEL = $('<form class="time-block">');
-    console.log(timeBlocksArr[i]);
+    // console.log(timeBlocksArr[i]);
     newTimeBlockEL.attr("id", timeBlocksArr[i]);
     newTimeBlockDiv = $('<div class="row">');
-    newTimeBlockDiv.append(
-        '<p class="hour col-2"></p>',
-        '<textarea class="col-8 jobs" id="inline-form-input"></textarea>',
-        '<button type="submit" data-event="none" class="col-2 saveBtn"><i class="far fa-save"></i></button>'
-        );
-    $('.row').children('p').text(timeBlocksArr[i]); 
+    newHour = $('<p class="hour col-2"></p>');
+    newHour.text(timeBlocksArr[i]);
+    newText = $('<textarea class="col-8 jobs" id="inline-form-input"></textarea>')
+    newBtn = $('<button type="submit" data-event="none" class="col-2 saveBtn"><i class="far fa-save"></i></button>');
+    newHour.appendTo(newTimeBlockDiv);
+    newText.appendTo(newTimeBlockDiv);
+    newBtn.appendTo(newTimeBlockDiv);
     newTimeBlockDiv.appendTo(newTimeBlockEL);
     newTimeBlockEL.appendTo(".container");     
 }; 
-
-
-    
-    //Assigns colour class based on time
-    // var allBlocks = $(".time-block");
-    // // console.log(allBlocks);
-    // var currentHour = moment().format('ha');
-
-
 
 setInterval(displayDate, 1000);
