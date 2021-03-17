@@ -28,6 +28,10 @@ WHEN I refresh the page
 THEN the saved events persist
 ```
 
+## Screenshot of Application
+
+![Screenshot](./assets/screenshots/screenshot.JPG)
+
 ## Link to Deployed Application
 
 https://ross-white.github.io/Work-Day-Scheduler/
