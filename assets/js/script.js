@@ -8,14 +8,13 @@
 // Each time block has a save button.
     // On click event saves data to local storage
 
-var timeBlocksArr = ["9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm"];
+var timeBlocksArr = ["9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm"];
 
 //Display date function
 function displayDate() {
     var date = moment().format('dddd MMMM Do ');
     $('#currentDay').text(date);
 }
-
 displayDate ();
 
 //Creates time block elements
@@ -45,20 +44,17 @@ function displayJobs() {
     for (i = 0; i < savedJobs.length; i++) {
         locationArr.push(savedJobs[i].time);
     }
-    
     for (let i=0; i < locationArr.length; i++) {
         var timeBlockid = "#" + locationArr[i];
         $(timeBlockid).children(".row").children("textarea").val(savedJobs[i].job);
     }
-
 }
-
 displayJobs ();
 
 //Saves input to local storage
-for ( var i = 0; i < timeBlocksArr.length; i++ ) {
+for (var i = 0; i < timeBlocksArr.length; i++) {
     var jobList = JSON.parse(window.localStorage.getItem("localJobs")) || [];
-    $( "button" ).eq( i ).on( "click", { value: i }, function(event) {
+    $("button").eq(i).on( "click", { value: i }, function(event) {
         event.preventDefault();
         var savedJob = {
         time: $(this).siblings("p").text(),
@@ -69,5 +65,18 @@ for ( var i = 0; i < timeBlocksArr.length; i++ ) {
     });
   }
 
-
-
+//Colour code timeblocks based on current time
+for ( var i = 0; i < timeBlocksArr.length; i++ ) {
+    var currentTime = moment().format('ha');
+    var timeBlocks = $(".time-block");
+    var currentBlock = $(timeBlocks[i]);
+    var blockId = currentBlock.attr("id");
+    console.log(blockId);
+    if (blockId === currentTime) {
+        currentBlock.children(".row").children("textarea").addClass("present");
+    } else if (moment(blockId, "ha").isBefore()) {
+        currentBlock.children(".row").children("textarea").addClass("past");
+    } else if (moment(blockId, "ha").isAfter()) {
+        currentBlock.children(".row").children("textarea").addClass("future");
+    }
+}
