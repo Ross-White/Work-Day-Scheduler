@@ -34,9 +34,30 @@ for (var i = 0; i < timeBlocksArr.length; i++) {
     newTimeBlockEL.appendTo(".container");
 }; 
 
+//Populates timeblocks with data from local storage
+function displayJobs() {
+    var savedJobs = localStorage.getItem("localJobs");
+    var locationArr = [];
+    if (savedJobs === null || savedJobs === "") {
+        savedJobs = [];
+    } else 
+    savedJobs = JSON.parse(savedJobs);
+    for (i = 0; i < savedJobs.length; i++) {
+        locationArr.push(savedJobs[i].time);
+    }
+    
+    for (let i=0; i < locationArr.length; i++) {
+        var timeBlockid = "#" + locationArr[i];
+        $(timeBlockid).children(".row").children("textarea").val(savedJobs[i].job);
+    }
+
+}
+
+displayJobs ();
+
 //Saves input to local storage
 for ( var i = 0; i < timeBlocksArr.length; i++ ) {
-    var jobList = JSON.parse(window.localStorage.getItem("jobList")) || [];
+    var jobList = JSON.parse(window.localStorage.getItem("localJobs")) || [];
     $( "button" ).eq( i ).on( "click", { value: i }, function(event) {
         event.preventDefault();
         var savedJob = {
@@ -44,16 +65,9 @@ for ( var i = 0; i < timeBlocksArr.length; i++ ) {
         job: $(this).siblings("textarea").val()
         };
     jobList.push(savedJob);
-    localStorage.setItem("jobList", JSON.stringify(jobList));
+    localStorage.setItem("localJobs", JSON.stringify(jobList));
     });
   }
 
 
-
-// function saveEvent(event) {
-//     var btnClicked = $(event.target);
-//     var job = btnClicked.closest('textarea').val();
-// }
-
-// $(".saveBtn").on("click", saveEvent());
 
