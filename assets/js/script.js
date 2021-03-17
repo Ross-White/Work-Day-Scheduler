@@ -8,29 +8,52 @@
 // Each time block has a save button.
     // On click event saves data to local storage
 
-var timeBlocksArr = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
+var timeBlocksArr = ["9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm"];
 
 //Display date function
-function displayDate () {
+function displayDate() {
     var date = moment().format('dddd MMMM Do ');
     $('#currentDay').text(date);
 }
 
+displayDate ();
+
 //Creates time block elements
 for (var i = 0; i < timeBlocksArr.length; i++) {
     var newTimeBlockEL = $('<form class="time-block">');
-    // console.log(timeBlocksArr[i]);
     newTimeBlockEL.attr("id", timeBlocksArr[i]);
     newTimeBlockDiv = $('<div class="row">');
     newHour = $('<p class="hour col-2"></p>');
     newHour.text(timeBlocksArr[i]);
     newText = $('<textarea class="col-8 jobs" id="inline-form-input"></textarea>')
-    newBtn = $('<button type="submit" data-event="none" class="col-2 saveBtn"><i class="far fa-save"></i></button>');
+    newBtn = $('<button class="col-2 saveBtn">Save</button>');
     newHour.appendTo(newTimeBlockDiv);
     newText.appendTo(newTimeBlockDiv);
     newBtn.appendTo(newTimeBlockDiv);
     newTimeBlockDiv.appendTo(newTimeBlockEL);
-    newTimeBlockEL.appendTo(".container");     
+    newTimeBlockEL.appendTo(".container");
 }; 
 
-setInterval(displayDate, 1000);
+//Saves input to local storage
+for ( var i = 0; i < timeBlocksArr.length; i++ ) {
+    var jobList = JSON.parse(window.localStorage.getItem("jobList")) || [];
+    $( "button" ).eq( i ).on( "click", { value: i }, function(event) {
+        event.preventDefault();
+        var savedJob = {
+        time: $(this).siblings("p").text(),
+        job: $(this).siblings("textarea").val()
+        };
+    jobList.push(savedJob);
+    localStorage.setItem("jobList", JSON.stringify(jobList));
+    });
+  }
+
+
+
+// function saveEvent(event) {
+//     var btnClicked = $(event.target);
+//     var job = btnClicked.closest('textarea').val();
+// }
+
+// $(".saveBtn").on("click", saveEvent());
+
